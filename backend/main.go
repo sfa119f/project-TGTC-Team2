@@ -25,6 +25,7 @@ func main() {
 	router.HandleFunc("/banners", handlers.MakeBanner).Methods(http.MethodPost)
 	router.HandleFunc("/banners/{id}", handlers.UpdateBanner).Methods(http.MethodPatch)
 	router.HandleFunc("/usersXbanners", handlers.MakeUserXBanner).Methods(http.MethodPost)
+	router.HandleFunc("/usersXbanners", handlers.GetBannersOfUser).Queries("userId", "{id}").Methods(http.MethodGet)
 
 	http.ListenAndServe(":8000", router)
 }

@@ -128,3 +128,19 @@ func MakeUserXBanner(w http.ResponseWriter, r *http.Request) {
 	// 	json.NewEncoder(w).Encode(dictionary.APIResponse{Data: userXBanner, Error: dictionary.NoError})
 	// }
 }
+
+func GetBannersOfUser(w http.ResponseWriter, r *http.Request) {
+	userIdstring := r.FormValue("userId")
+	userIdInt64, err := strconv.ParseInt(userIdstring, 10, 64)
+	if err != nil {
+		log.Fatal(err)
+	}
+	banners_id, err := service.GetBannersOfUser(idInt64)
+	
+	if err != nil {
+		json.NewEncoder(w).Encode(dictionary.APIResponse{Data: nil, Error: dictionary.UndisclosedError})
+	} else {
+		fmt.Println("get banners dari banners_id")
+		// json.NewEncoder(w).Encode(dictionary.APIResponse{Data: banners_id, Error: dictionary.NoError})
+	}
+}
