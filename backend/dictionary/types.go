@@ -28,7 +28,8 @@ type Banner struct {
 }
 
 type User_X_Banner struct {
-	// ini perlu ga ya
+	UserId			int			`json:"user_id"`
+	BannerId		int			`json:"banner_id"`
 }
 
 type APIResponse struct {

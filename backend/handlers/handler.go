@@ -16,7 +16,6 @@ import (
 func GetUser(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	idstring := params["id"]
-	fmt.Println(idstring)
 	idInt64, err := strconv.ParseInt(idstring, 10, 64)
 	if err != nil {
 		log.Fatal(err)
@@ -112,4 +111,20 @@ func UpdateBanner(w http.ResponseWriter, r *http.Request) {
 	} else {
 		json.NewEncoder(w).Encode(dictionary.APIResponse{Data: banner, Error: dictionary.NoError})
 	}
+}
+
+func MakeUserXBanner(w http.ResponseWriter, r *http.Request) {
+	var userXBanner dictionary.User_X_Banner
+	json.NewDecoder(r.Body).Decode(&userXBanner)
+	fmt.Println(userXBanner)
+	// err := service.InsertUserXBanner(userXBanner)
+	// if err != nil {
+	// 	fmt.Println("err insert user:", err)
+	// }
+
+	// if err != nil {
+	// 	json.NewEncoder(w).Encode(dictionary.APIResponse{Data: nil, Error: dictionary.UndisclosedError})
+	// } else {
+	// 	json.NewEncoder(w).Encode(dictionary.APIResponse{Data: userXBanner, Error: dictionary.NoError})
+	// }
 }
