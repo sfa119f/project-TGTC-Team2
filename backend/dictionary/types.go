@@ -12,8 +12,10 @@ const (
 )
 
 type User struct {
-	Name	string `json:"name"`
-
+	Id			int 		`json:"id"`
+	Name		string 	`json:"name"`
+	Balance	int			`json:"balance"`
+	Member	int			`json:"membership"`
 }
 
 type Banner struct {

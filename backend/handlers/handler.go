@@ -3,6 +3,7 @@ package handlers
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"strconv"
 	"tgtc/backend/dictionary"
@@ -13,7 +14,20 @@ import (
 
 // takes user info from id in url
 func GetUser(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	idstring := params["id"]
+	fmt.Println(idstring)
+	idInt64, err := strconv.ParseInt(idstring, 10, 64)
+	if err != nil {
+		log.Fatal(err)
+	}
+	res, err := service.GetUser(idInt64)
 	
+	if err != nil {
+		json.NewEncoder(w).Encode(dictionary.APIResponse{Data: nil, Error: dictionary.UndisclosedError})
+	} else {
+		json.NewEncoder(w).Encode(dictionary.APIResponse{Data: res, Error: dictionary.NoError})
+	}
 }
 
 // takes banner info from id in url

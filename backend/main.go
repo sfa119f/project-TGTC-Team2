@@ -24,5 +24,5 @@ func main() {
 	router.HandleFunc("/banners", handlers.MakeBanner).Methods(http.MethodPost)
 	router.HandleFunc("/banners/{id}", handlers.UpdateBanner).Methods(http.MethodPatch)
 
-	http.ListenAndServe(":8080", router)
+	http.ListenAndServe(":8000", router)
 }
