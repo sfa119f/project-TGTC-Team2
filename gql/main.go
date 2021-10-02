@@ -9,7 +9,8 @@ import (
 func main() {
 	r := mux.NewRouter()
 
-	fs := http.FileServer(http.Dir("gql/webstatic"))
+	fs := http.FileServer(http.Dir("webstatic"))
 	r.PathPrefix("/").Handler(fs)
 
+	http.ListenAndServe(":9000", r)
 }

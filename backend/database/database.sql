@@ -16,6 +16,12 @@ INSERT INTO users (user_name, balance, membership) VALUES('Jane Doe', 50, 2);
 
 INSERT INTO users (user_name, balance, membership) VALUES('Andy Smith', 1000, 0);
 
+INSERT INTO users (user_name, balance, membership) VALUES('Andi', 1000000, 1);
+
+INSERT INTO users (user_name, balance, membership) VALUES('Budi', 50, 2);
+
+INSERT INTO users (user_name, balance, membership) VALUES('Cindy', 1000, 0);
+
 INSERT INTO banners (banner_name, banner_image, next_url, date_start, date_end) VALUES('Diskon Makanan', 'diskon_makanan.png', 'next.com', '20211002', '20211130');
 
 INSERT INTO banners (banner_name, banner_image, next_url, date_start, date_end) VALUES('Diskon Gadget', 'diskon_gadget.png', 'next.com', '20211002', '20211130');
@@ -27,3 +33,9 @@ INSERT INTO banners (banner_name, banner_image, next_url, date_start, date_end) 
 INSERT INTO banners (banner_name, banner_image, next_url, date_start, date_end) VALUES('Top Up Saldo Tokopedia', 'topup_saldo.png', 'https://tokopedia.com', '20211003', '20211103');
 
 INSERT INTO banners (banner_name, banner_image, next_url, date_start, date_end) VALUES('Kupon WIB', 'kupon_wib.png', 'https://tokopedia.com', '20211003', '20211103');
+
+INSERT INTO banners (banner_name, banner_image, next_url, date_start, date_end) VALUES('Cashback PLN', 'cb_pln.png', 'https://tokopedia.com', '20211003', '20211230');
+
+INSERT INTO banners (banner_name, banner_image, next_url, date_start, date_end) VALUES('Cashback PPKL', 'cb_ppkl.png', 'https://tokopedia.com', '20211003', '20211103');
+
+INSERT INTO banners (banner_name, banner_image, next_url, date_start, date_end) VALUES('Cashback Fashion', 'cb_fashion.png', 'https://tokopedia.com', '20211003', '20211103');

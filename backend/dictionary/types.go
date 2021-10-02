@@ -1,15 +1,35 @@
 package dictionary
 
+import (
+	"time"
+)
+
+const (
+	UndisclosedError	= "Something went wrong"
+	NoError				= "None"
+	NotFoundError		= "Not found"
+	InvalidParamError	= "Invalid parameter"
+)
+
 type User struct {
 	Name	string `json:"name"`
 
 }
 
 type Banner struct {
-	ImagePath	string `json:"image_path"`
-
+	Id			int			`json:"id"`
+	Name		string		`json:"banner_name"`
+	Image		string		`json:"banner_image"`
+	Url			string		`json:"next_url"`
+	DateStart	time.Time	`json:"date_start"`
+	EndDate		time.Time	`json:"date_end"`
 }
 
 type User_X_Banner struct {
 	// ini perlu ga ya
+}
+
+type APIResponse struct {
+	Data	interface{}	`json:"data"`
+	Error	string		`json:"error"`
 }
