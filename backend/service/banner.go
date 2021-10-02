@@ -1,6 +1,9 @@
 package service
 
 import (
+	"database/sql"
+	"errors"
+	"fmt"
 	"tgtc/backend/database"
 	"tgtc/backend/dictionary"
 )
@@ -19,6 +22,24 @@ func InsertBanner(banner dictionary.Banner) error {
 	// sampe sini banner id masih kosong
 
 	return err
+}
+
+func GetBanner(id int64) (dictionary.Banner, error) {
+	db := database.GetDB()
+
+	query := `
+	SELECT * FROM banners WHERE banner_id = $1
+	`
+
+	var res dictionary.Banner
+	if err := db.QueryRow(query, id).Scan(&res.Id, &res.Image, &res.Image, &res.Url, &res.DateStart, &res.EndDate); err != nil {
+		if err == sql.ErrNoRows {
+			return res, errors.New("banner not found")
+		}
+		fmt.Println(err)
+		return res, errors.New("error")
+	}
+	return res, nil
 }
 
 func UpdateBanner(banner dictionary.Banner) error {

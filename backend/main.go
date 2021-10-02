@@ -20,6 +20,7 @@ func main() {
 
 	// routes
 	router.HandleFunc("/users/{id}", handlers.GetUser).Methods(http.MethodGet)
+	router.HandleFunc("/users", handlers.MakeUser).Methods(http.MethodPost)
 	router.HandleFunc("/banners/{id}", handlers.GetBanner).Methods(http.MethodGet)
 	router.HandleFunc("/banners", handlers.MakeBanner).Methods(http.MethodPost)
 	router.HandleFunc("/banners/{id}", handlers.UpdateBanner).Methods(http.MethodPatch)
