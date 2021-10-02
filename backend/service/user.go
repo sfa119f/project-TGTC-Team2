@@ -25,7 +25,8 @@ func GetUser(id int64) (dictionary.User, error) {
 	db := database.GetDB()
 
 	query := `
-		SELECT * FROM users WHERE user_id = $1
+	SELECT user_id, user_name, balance, membership
+	FROM users WHERE user_id = $1
 	`
 	var res dictionary.User
 	if err := db.QueryRow(query, id).Scan(&res.Id, &res.Name, &res.Balance, &res.Member); err != nil {

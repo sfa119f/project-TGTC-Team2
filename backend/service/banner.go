@@ -28,7 +28,8 @@ func GetBanner(id int64) (dictionary.Banner, error) {
 	db := database.GetDB()
 
 	query := `
-	SELECT * FROM banners WHERE banner_id = $1
+	SELECT banner_id, banner_name, banner_image, next_url, date_start, date_end
+	FROM banners WHERE banner_id = $1
 	`
 
 	var res dictionary.Banner
