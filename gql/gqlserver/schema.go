@@ -37,14 +37,14 @@ func (s *SchemaWrapper) Init() error {
 					Resolve: s.productResolver.GetUser(),
 				},
 				"BannerDetail": &graphql.Field{
-					Type:        UserType,
+					Type:        BannerType,
 					Description: "Get banner by ID",
 					Args: graphql.FieldConfigArgument{
 						"banner_id": &graphql.ArgumentConfig{
 							Type: graphql.NewNonNull(graphql.Int),
 						},
 					},
-					Resolve: s.productResolver.GetUser(),
+					Resolve: s.productResolver.GetBanner(),
 				},
 				"UserBanners": &graphql.Field{
 					Type:        graphql.NewList(BannerType),

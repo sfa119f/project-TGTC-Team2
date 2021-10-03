@@ -39,9 +39,25 @@ func (r *Resolver) GetUser() graphql.FieldResolveFn {
 	}
 }
 
-func (r *Resolver) GetAllProducts() graphql.FieldResolveFn {
+func (r *Resolver) GetBanner() graphql.FieldResolveFn {
 	return func(p graphql.ResolveParams) (interface{}, error) {
-		return nil, nil
+		id, _ := p.Args["banner_id"].(int)
+
+		res, err := http.Get(r.APIEndpoint + "/banners/" + fmt.Sprint(id))
+		if err != nil {
+			fmt.Println("err api call GetBanner:", err)
+		}
+		body, err := ioutil.ReadAll(res.Body)
+
+		bannerRes := struct {
+			Data dictionary.Banner
+			Error string
+		}{}
+
+		respJsonString := bannerRes
+		json.Unmarshal(body, &respJsonString)
+
+		return respJsonString.Data, err
 	}
 }
 
