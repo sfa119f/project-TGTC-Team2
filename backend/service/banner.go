@@ -38,7 +38,7 @@ func GetBanner(id int64) (dictionary.Banner, error) {
 	`
 
 	var res dictionary.Banner
-	if err := db.QueryRow(query, id).Scan(&res.Id, &res.Image, &res.Image, &res.Url, &res.DateStart, &res.EndDate); err != nil {
+	if err := db.QueryRow(query, id).Scan(&res.Id, &res.Name, &res.Image, &res.Url, &res.DateStart, &res.EndDate); err != nil {
 		if err == sql.ErrNoRows {
 			return res, errors.New("banner not found")
 		}

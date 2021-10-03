@@ -55,7 +55,6 @@ func MakeUser(w http.ResponseWriter, r *http.Request) {
 func GetBanner(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	idstr := params["id"]
-	fmt.Println(idstr)
 	idInt64, err := strconv.ParseInt(idstr, 10, 64)
 	if err != nil {
 		log.Fatal(err)
@@ -136,11 +135,14 @@ func GetBannersOfUser(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 	banners_id, err := service.GetBannersOfUser(userIdInt64)
-	
 	if err != nil {
 		json.NewEncoder(w).Encode(dictionary.APIResponse{Data: nil, Error: dictionary.UndisclosedError})
-	} else {
-		fmt.Println("get banners dari banners_id")
-		json.NewEncoder(w).Encode(dictionary.APIResponse{Data: banners_id, Error: dictionary.NoError})
 	}
+
+	// for _, banner_id := range banners_id {
+	// 	// ambil setiap banner berdasarkan id
+
+	// }
+	
+	json.NewEncoder(w).Encode(dictionary.APIResponse{Data: banners_id, Error: dictionary.NoError})
 }
