@@ -34,7 +34,7 @@ func (s *SchemaWrapper) Init() error {
 							Type: graphql.NewNonNull(graphql.Int),
 						},
 					},
-					Resolve: s.productResolver.GetProduct(),
+					Resolve: s.productResolver.GetUser(),
 				},
 				"BannerDetail": &graphql.Field{
 					Type:        UserType,
@@ -44,7 +44,7 @@ func (s *SchemaWrapper) Init() error {
 							Type: graphql.NewNonNull(graphql.Int),
 						},
 					},
-					Resolve: s.productResolver.GetProduct(),
+					Resolve: s.productResolver.GetUser(),
 				},
 				"UserBanners": &graphql.Field{
 					Type:        graphql.NewList(BannerType),
