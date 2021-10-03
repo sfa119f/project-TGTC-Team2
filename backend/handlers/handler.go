@@ -116,17 +116,17 @@ func UpdateBanner(w http.ResponseWriter, r *http.Request) {
 func MakeUserXBanner(w http.ResponseWriter, r *http.Request) {
 	var userXBanner dictionary.User_X_Banner
 	json.NewDecoder(r.Body).Decode(&userXBanner)
-	fmt.Println(userXBanner)
-	// err := service.InsertUserXBanner(userXBanner)
-	// if err != nil {
-	// 	fmt.Println("err insert user:", err)
-	// }
+	
+	err := service.InsertUserXBanner(userXBanner)
+	if err != nil {
+		fmt.Println("err insert user:", err)
+	}
 
-	// if err != nil {
-	// 	json.NewEncoder(w).Encode(dictionary.APIResponse{Data: nil, Error: dictionary.UndisclosedError})
-	// } else {
-	// 	json.NewEncoder(w).Encode(dictionary.APIResponse{Data: userXBanner, Error: dictionary.NoError})
-	// }
+	if err != nil {
+		json.NewEncoder(w).Encode(dictionary.APIResponse{Data: nil, Error: dictionary.UndisclosedError})
+	} else {
+		json.NewEncoder(w).Encode(dictionary.APIResponse{Data: userXBanner, Error: dictionary.NoError})
+	}
 }
 
 func GetBannersOfUser(w http.ResponseWriter, r *http.Request) {

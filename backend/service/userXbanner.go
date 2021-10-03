@@ -1,8 +1,6 @@
 package service
 
 import (
-	"database/sql"
-	"errors"
 	"tgtc/backend/database"
 	"tgtc/backend/dictionary"
 )
@@ -10,23 +8,11 @@ import (
 func InsertUserXBanner(userXbanner dictionary.User_X_Banner) error {
 	db := database.GetDB()
 
-	query1 :=`
-		SELECT COUNT(user_id) FROM user_x_banner WHERE user_id = $1, banner_id = $2
-	`
-	query2 :=`
+	query :=`
 		INSERT INTO user_x_banner (user_id, banner_id) VALUES ($1, $2)
 	`
 
-	var res int
-	err := db.QueryRow(query1, userXbanner.UserId, userXbanner.BannerId).Scan(&res);
-	if err != nil {
-		if err == sql.ErrNoRows {
-			_, err := db.Exec(query2, userXbanner.UserId, userXbanner.BannerId)
-			return err
-		}
-	} else {
-		err = errors.New("data is already")
-	}
+	_, err := db.Exec(query, userXbanner.UserId, userXbanner.BannerId)
 
 	return err
 }
