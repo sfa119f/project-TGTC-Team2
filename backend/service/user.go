@@ -12,7 +12,7 @@ func InsertUser(user dictionary.User) error {
 	db := database.GetDB()
 
 	query :=`
-	NSERT INTO users (user_name, balance, membership)
+	INSERT INTO users (user_name, balance, membership)
 	VALUES ($1, $2, $3)
 	`
 

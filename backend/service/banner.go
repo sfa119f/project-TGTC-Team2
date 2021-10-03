@@ -8,7 +8,7 @@ import (
 	"tgtc/backend/dictionary"
 )
 
-func InsertBanner(banner dictionary.Banner) error {
+func InsertBanner(banner *dictionary.Banner) error {
 	db := database.GetDB()
 
 	query := `
@@ -18,8 +18,13 @@ func InsertBanner(banner dictionary.Banner) error {
 
 	_, err := db.Exec(query,
 		banner.Name, banner.Image, banner.Url, banner.DateStart, banner.EndDate)
-
-	// sampe sini banner id masih kosong
+	
+	query2 := `
+	SELECT currval(pg_get_serial_sequence('banners', 'banner_id'))
+	`
+	
+	row := db.QueryRow(query2)
+	row.Scan(&banner.Id)
 
 	return err
 }

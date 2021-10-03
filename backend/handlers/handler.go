@@ -79,7 +79,7 @@ func MakeBanner(w http.ResponseWriter, r *http.Request) {
 	banner := dictionary.Banner{}
 	json.NewDecoder(r.Body).Decode(&banner)
 
-	err := service.InsertBanner(banner)
+	err := service.InsertBanner(&banner)
 	if err != nil {
 		fmt.Println("err insert banner:", err)
 	}
@@ -135,12 +135,12 @@ func GetBannersOfUser(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	banners_id, err := service.GetBannersOfUser(idInt64)
+	banners_id, err := service.GetBannersOfUser(userIdInt64)
 	
 	if err != nil {
 		json.NewEncoder(w).Encode(dictionary.APIResponse{Data: nil, Error: dictionary.UndisclosedError})
 	} else {
 		fmt.Println("get banners dari banners_id")
-		// json.NewEncoder(w).Encode(dictionary.APIResponse{Data: banners_id, Error: dictionary.NoError})
+		json.NewEncoder(w).Encode(dictionary.APIResponse{Data: banners_id, Error: dictionary.NoError})
 	}
 }
