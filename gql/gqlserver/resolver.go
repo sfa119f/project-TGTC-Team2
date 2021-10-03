@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"tgtc/backend/dictionary"
+	"strconv"
 
 	"github.com/graphql-go/graphql"
 )
@@ -55,6 +56,27 @@ func (r *Resolver) GetBanner() graphql.FieldResolveFn {
 		}{}
 
 		respJsonString := bannerRes
+		json.Unmarshal(body, &respJsonString)
+
+		return respJsonString.Data, err
+	}
+}
+
+func (r *Resolver) GetAllBannerOfUser() graphql.FieldResolveFn {
+	return func(p graphql.ResolveParams) (interface{}, error) {
+		user_id, _ := p.Args["user_id"].(int)
+		resp, err := http.Get(r.APIEndpoint + "/userXbanners/?userId=" + strconv.Itoa(user_id))
+
+		if err != nil {
+			fmt.Println("err api call getuser:", err)
+		}
+		body, err := ioutil.ReadAll(resp.Body)
+
+		userResp := struct {
+			Data dictionary.User
+			Error string
+		}{}
+		respJsonString := userResp
 		json.Unmarshal(body, &respJsonString)
 
 		return respJsonString.Data, err
