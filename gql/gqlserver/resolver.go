@@ -4,13 +4,15 @@ import (
 	"github.com/graphql-go/graphql"
 )
 
-type Resolver struct {}
-
-func NewResolver() *Resolver {
-	return &Resolver{}
+type Resolver struct {
+	APIEndpoint string
 }
 
-func (r *Resolver) GetProduct() graphql.FieldResolveFn {
+func NewResolver(APIEndpoint string) *Resolver {
+	return &Resolver{APIEndpoint: APIEndpoint}
+}
+
+func (r *Resolver) GetUser() graphql.FieldResolveFn {
 	return func(p graphql.ResolveParams) (interface{}, error) {
 		// id, _ := p.Args["product_id"].(int)
 

@@ -3,17 +3,20 @@ package main
 import (
 	"log"
 	"net/http"
-	"time"
 
 	"tgtc/gql/gqlserver"
 
 	"github.com/gorilla/mux"
 )
 
+const (
+	APIEndpoint = "http://localhost:8000"
+)
+
 func main() {
 	router := mux.NewRouter()
 
-	pResolver := gqlserver.NewResolver()
+	pResolver := gqlserver.NewResolver(APIEndpoint)
 	schemaWrapper := gqlserver.NewSchemaWrapper().
 		WithProductResolver(pResolver)
 
@@ -29,10 +32,5 @@ func main() {
 	fs := http.FileServer(http.Dir("webstatic"))
 	router.PathPrefix("/").Handler(fs)
 
-	serverConfig := server.Config{
-		WriteTimeout: 5 * time.Second,
-		ReadTimeout:  5 * time.Second,
-		Port:         9000,
-	}
-	server.Serve(serverConfig, router)
+	http.ListenAndServe(":9000", router)
 }

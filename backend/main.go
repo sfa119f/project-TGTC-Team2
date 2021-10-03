@@ -9,8 +9,6 @@ import (
 	"github.com/gorilla/mux"
 )
 
-
-
 func main() {
 	// init db disini dulu
 	database.InitDB()
