@@ -85,6 +85,31 @@ func (s *SchemaWrapper) Init() error {
 					},
 					Resolve: s.productResolver.CreateBanner(),
 				},
+				"updateBanner": &graphql.Field{
+					Type: BannerType,
+					Description: "Update existing banner based on id",
+					Args: graphql.FieldConfigArgument{
+						"banner_id": &graphql.ArgumentConfig{
+							Type: graphql.NewNonNull(graphql.Int),
+						},
+						"banner_name": &graphql.ArgumentConfig{
+							Type: graphql.String,
+						},
+						"banner_image": &graphql.ArgumentConfig{
+							Type: graphql.String,
+						},
+						"banner_url": &graphql.ArgumentConfig{
+							Type: graphql.String,
+						},
+						"date_start": &graphql.ArgumentConfig{
+							Type: graphql.Int,
+						},
+						"date_end": &graphql.ArgumentConfig{
+							Type: graphql.Int,
+						},
+					},
+					Resolve: s.productResolver.UpdateBanner(),
+				},
 			},
 		}),
 	})

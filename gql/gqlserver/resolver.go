@@ -122,3 +122,50 @@ func (r *Resolver) CreateBanner() graphql.FieldResolveFn {
 		return respJsonString.Data, err
 	}
 }
+
+func (r *Resolver) UpdateBanner() graphql.FieldResolveFn {
+	return func(p graphql.ResolveParams) (interface{}, error) {
+		banner_id, _ := p.Args["banner_id"].(int)
+		banner_name, _ := p.Args["banner_name"].(string)
+		banner_image, _ := p.Args["banner_image"].(string)
+		banner_url, _ := p.Args["banner_url"].(string)
+		date_start, _ := p.Args["date_start"].(time.Time)
+		date_end, _ := p.Args["date_end"].(time.Time)
+
+		banner := dictionary.Banner{
+			Id: banner_id,
+			Name: banner_name,
+			Image: banner_image,
+			Url: banner_url,
+			DateStart: date_start,
+			EndDate: date_end,
+		}
+
+		updatedBanner, err := json.Marshal(banner)
+		if err != nil {
+			fmt.Println("err marshalling banner into json str:", err)
+		}
+
+		client := http.Client{}
+		url := r.APIEndpoint + "/banners/" + fmt.Sprint(banner_id)
+
+		req, err := http.NewRequest(http.MethodPatch, url, bytes.NewReader(updatedBanner))
+		if err != nil {
+			fmt.Println("err making request:", err)
+		}
+		resp, err := client.Do(req)
+		if err != nil {
+			fmt.Println("err api call getuser:", err)
+		}
+		body, err := ioutil.ReadAll(resp.Body)
+
+		bannerRes := struct {
+			Data dictionary.Banner
+			Error string
+		}{}
+		respJsonString := bannerRes
+		json.Unmarshal(body, &respJsonString)
+
+		return respJsonString.Data, err
+	}
+}
