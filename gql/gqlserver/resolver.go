@@ -1,12 +1,14 @@
 package gqlserver
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
 	"strconv"
 	"tgtc/backend/dictionary"
+	"time"
 
 	"github.com/graphql-go/graphql"
 )
@@ -71,7 +73,6 @@ func (r *Resolver) GetAllBannerOfUser() graphql.FieldResolveFn {
 			fmt.Println("err api call getbannerofuser:", err)
 		}
 		body, err := ioutil.ReadAll(resp.Body)
-		fmt.Println("bodynyta ini", string(body))
 
 		userResp := struct {
 			Data []dictionary.Banner
@@ -84,11 +85,40 @@ func (r *Resolver) GetAllBannerOfUser() graphql.FieldResolveFn {
 	}
 }
 
-// func (r *Resolver) UpdateProduct() graphql.FieldResolveFn {
-// 	return func(p graphql.ResolveParams) (interface{}, error) {
-// 		id, _ := p.Args["product_id"].(int)
+func (r *Resolver) CreateBanner() graphql.FieldResolveFn {
+	return func(p graphql.ResolveParams) (interface{}, error) {
+		banner_name, _ := p.Args["banner_name"].(string)
+		banner_image, _ := p.Args["banner_image"].(string)
+		banner_url, _ := p.Args["banner_url"].(string)
+		date_start, _ := p.Args["date_start"].(time.Time)
+		date_end, _ := p.Args["date_end"].(time.Time)
 
-// 		// update to use Usecase from previous session
-// 		return service.UpdateProduct(id)
-// 	}
-// }
+		req := dictionary.Banner{
+			Name: banner_name,
+			Image: banner_image,
+			Url: banner_url,
+			DateStart: date_start,
+			EndDate: date_end,
+		}
+
+		newBanner, err := json.Marshal(req)
+		if err != nil {
+			fmt.Println("err marshalling banner into json str:", err)
+		}
+
+		resp, err := http.Post(r.APIEndpoint + "/banners", "application/json", bytes.NewReader(newBanner))
+		if err != nil {
+			fmt.Println("err api call getuser:", err)
+		}
+		body, err := ioutil.ReadAll(resp.Body)
+
+		bannerRes := struct {
+			Data dictionary.Banner
+			Error string
+		}{}
+		respJsonString := bannerRes
+		json.Unmarshal(body, &respJsonString)
+
+		return respJsonString.Data, err
+	}
+}

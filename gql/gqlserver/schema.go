@@ -59,22 +59,34 @@ func (s *SchemaWrapper) Init() error {
 			},
 		}),
 		// uncomment this and add objects for mutation
-		// Mutation: graphql.NewObject(graphql.ObjectConfig{
-		// 	Name: "update data",
-		// 	Description: "mutations related to updating existing data",
-		// 	Fields: graphql.Fields{
-		// 		"allProducts": &graphql.Field{
-		// 			Type: ProductType,
-		// 			Description: "Update product by ID",
-		// 			Args: graphql.FieldConfigArgument{
-		// 				"product_id": &graphql.ArgumentConfig{
-		// 					Type: graphql.NewNonNull(graphql.Int),
-		// 				},
-		// 			},
-		// 			Resolve: s.productResolver.UpdateProduct(),
-		// 		},
-		// 	},
-		// }),
+		Mutation: graphql.NewObject(graphql.ObjectConfig{
+			Name: "updateData",
+			Description: "mutations related to updating existing data",
+			Fields: graphql.Fields{
+				"createBanner": &graphql.Field{
+					Type: BannerType,
+					Description: "Create new banner",
+					Args: graphql.FieldConfigArgument{
+						"banner_name": &graphql.ArgumentConfig{
+							Type: graphql.NewNonNull(graphql.String),
+						},
+						"banner_image": &graphql.ArgumentConfig{
+							Type: graphql.NewNonNull(graphql.String),
+						},
+						"banner_url": &graphql.ArgumentConfig{
+							Type: graphql.NewNonNull(graphql.String),
+						},
+						"date_start": &graphql.ArgumentConfig{
+							Type: graphql.NewNonNull(graphql.Int),
+						},
+						"date_end": &graphql.ArgumentConfig{
+							Type: graphql.NewNonNull(graphql.Int),
+						},
+					},
+					Resolve: s.productResolver.CreateBanner(),
+				},
+			},
+		}),
 	})
 
 	if err != nil {
