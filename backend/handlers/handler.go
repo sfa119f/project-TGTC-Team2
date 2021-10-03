@@ -139,10 +139,14 @@ func GetBannersOfUser(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(dictionary.APIResponse{Data: nil, Error: dictionary.UndisclosedError})
 	}
 
-	// for _, banner_id := range banners_id {
-	// 	// ambil setiap banner berdasarkan id
-
-	// }
+	banners := []dictionary.Banner{}
+	for _, banner_id := range banners_id {
+		banner, err := service.GetBanner(int64(banner_id))
+		if err != nil {
+			json.NewEncoder(w).Encode(dictionary.APIResponse{Data: nil, Error: dictionary.NotFoundError})
+		}
+		banners = append(banners, banner)
+	}
 	
-	json.NewEncoder(w).Encode(dictionary.APIResponse{Data: banners_id, Error: dictionary.NoError})
+	json.NewEncoder(w).Encode(dictionary.APIResponse{Data: banners, Error: dictionary.NoError})
 }
